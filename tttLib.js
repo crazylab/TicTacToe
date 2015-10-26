@@ -77,7 +77,7 @@ lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 
 	return {
 		winner 		: 	lib.checkForMatch(player),
-		end    		: 	availableMoves.length == [],
+		end    		: 	availableMoves.length == [] || lib.checkForMatch(player),
 		isValidMove : 	true
 	}
 }

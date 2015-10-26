@@ -64,7 +64,7 @@ key.processInput = function(matrix,players,availableMoves){
 							break;
 			case 'space': 	var move = +(row + '' + column);
 							status = lib.handleUserInteraction(matrix,players[playerIndex],move,availableMoves);
-							playerIndex = status.isValidMove ? 1 - playerIndex : playerIndex;
+							playerIndex = status.isValidMove && !status.end? 1 - playerIndex : playerIndex;
 		}	
 
 		grphx.drawDiagram(players[playerIndex].symbol);
