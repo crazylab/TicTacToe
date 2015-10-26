@@ -27,9 +27,6 @@ var down = function(center,position){
 	position.y = position.y < limit ? position.y += 8 : position.y;
 	charm.position(position.x, position.y);	
 }
-var action = function(matrix,player,move,availableMoves){
-	lib.handleUserInteraction(matrix,player,move,availableMoves);
-}
 key.input = function(matrix,players,availableMoves){
 	var screenHeight = process.stdout.rows;
 	var screenWidth = process.stdout.columns;
@@ -40,18 +37,17 @@ key.input = function(matrix,players,availableMoves){
 	var row = 2, column = 2;
 	var move = +(row + '' + column);
 	var playerIndex = 0;
-
+	var status = {winner : false, end: false};
 	charm.erase('up');
 	
 	grphx.presentScreen('O',position);
 	grphx.cursor(position);
 	keypress(process.stdin);
 
-
 	process.stdin.on('keypress', function (ch, key){
-		// charm.position(0,0);
-		// charm.erase('up');
-		charm.reset();
+		charm.erase('up');
+		charm.erase('down');
+		charm.position(0,0);
 		switch(key.name){
 			case 'left' : 	left(center,position);
 							column = column == 1 ? column : column - 1;
@@ -66,15 +62,30 @@ key.input = function(matrix,players,availableMoves){
 							row = row == 3 ? row : row + 1;
 							break;
 			case 'space': 	var move = +(row + '' + column);
-							action(matrix,players[playerIndex],move,availableMoves);
+							status = lib.handleUserInteraction(matrix,players[playerIndex],move,availableMoves);
 							playerIndex = 1 - playerIndex;
+		}	
 
-		}		
 		grphx.presentScreen(players[playerIndex].symbol);
 		grphx.cursor(position);
 		grphx.writeSymbols(matrix,center);
+
+		if(status.end){
+			grphx.writeMessage('Nobody Won The Game ..',center);
+			setTimeout(function(){
+				charm.reset();
+		    	process.stdin.pause();
+			},1500);
+		}
+		if(status.winner){
+			grphx.writeMessage('Player '+status.winner+' Won The Game ..',center);
+			setTimeout(function(){
+				charm.reset();
+		    	process.stdin.pause();
+			},1500);
+		}
 	  
-	  	if (key && key.ctrl && key.name == 'c') {
+	  	if (key.name == 'escape' || key.name == 'q') {
 			charm.reset();
 	    	process.stdin.pause();
 	  	}

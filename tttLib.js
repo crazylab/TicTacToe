@@ -1,3 +1,4 @@
+grphx = require('./graphics.js').grphx;
 var lib={};
 exports.lib=lib;
 
@@ -46,13 +47,6 @@ lib.checkForMatch=function(player){
 	var column=lib.checkColumnMatch(player);
 	return diagonal||row||column;
 }
-lib.presentMatrix=function(matrix){
-	var result=matrix.map(function(row,index){
-		return ['\t',index+1,'.\t  ',row[0],' |  ',row[1],'  | ',row[2]].join('');
-	}).join('\n\t\t----|-----|----\n');
-	var columnNumbers=['\n\t\t 1  |  2  |  3 \n','\t\t---------------\n'].join('');
-	return columnNumbers+result+'\n';
-}
 var simplyfyMove=function(move){
 	return move.replace(/\D/g,'');
 };
@@ -65,15 +59,8 @@ lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	matrix=lib.getMatrix(matrix,placeSelected,player.symbol);
 	player.moves.push(placeSelected);
 
-	var winner=lib.checkForMatch(player);
-	if(winner){
-		console.log(lib.presentMatrix(matrix));
-		console.log('Player '+winner+' own the match');
-		process.exit(0);
-	}
-	if(availableMoves.length==[]){
-		console.log(lib.presentMatrix(matrix));
-		console.log('\nNobody won the game.');
-		process.exit(0);
+	return {
+		winner : 	lib.checkForMatch(player),
+		end    : 	availableMoves.length==[]
 	}
 }

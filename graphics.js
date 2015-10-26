@@ -38,11 +38,6 @@ var writeHeading = function(message){
 	axel.fg(255,255,255);
 	axel.text(69,2,message);
 }
-var drawCursor = function(x,y){
-	axel.bg(100,100,100);
-	axel.box(x,y,8,1);
-	axel.bg(0,0,0);
-}
 grphx.writeSymbols = function(matrix,center){
 	//Top Row
 	axel.text(center.x - 20, center.y - 8, matrix[0][0]);
@@ -57,9 +52,20 @@ grphx.writeSymbols = function(matrix,center){
 	axel.text(center.x, center.y + 8, matrix[2][1]);
 	axel.text(center.x + 20, center.y + 8, matrix[2][2]);
 }
+var drawCursor = function(x,y){
+	axel.bg(100,100,100);
+	axel.box(x,y,8,1);
+	axel.bg(0,0,0);
+}
 grphx.cursor = function(position){
 	var position = {x: position.x - 4, y: position.y + 2};
 	drawCursor(position.x,position.y);
+}
+grphx.writeMessage = function(message,position){
+	var messageLength = message.length;
+	axel.bg(255,0,0);
+	axel.text(position.x - (messageLength/2),position.y,message);
+	axel.bg(0,0,0)
 }
 grphx.presentScreen = function(player){
 	var screenHeight = process.stdout.rows;
@@ -72,6 +78,7 @@ grphx.presentScreen = function(player){
 
 	writeHeading("Player "+player+"'s  Turn");
 	drawDiagram(center);
+
 	axel.bg(0,0,0);	
 }
 
