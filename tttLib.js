@@ -53,15 +53,6 @@ lib.presentMatrix=function(matrix){
 	var columnNumbers=['\n\t\t 1  |  2  |  3 \n','\t\t---------------\n'].join('');
 	return columnNumbers+result+'\n';
 }
-lib.showUserOption=function(availableMoves){
-	var result=availableMoves.map(function(move,index){
-		move=String(move).split("").join('\t');
-		var divider='\n    -------------------'
-		return '\t'+move+divider;
-	}).join('\n');
-	var header='    ---Row----Column---\n';
-	return header+result+'\n';
-};
 var simplyfyMove=function(move){
 	return move.replace(/\D/g,'');
 };
