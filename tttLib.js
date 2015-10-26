@@ -66,6 +66,8 @@ var simplyfyMove=function(move){
 	return move.replace(/\D/g,'');
 };
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){
+	if(availableMoves.indexOf(move) == -1)
+		return;
 	var indexOfMove = availableMoves.indexOf(+move);
 	var placeSelected=availableMoves.splice(indexOfMove,1)[0];
 
@@ -83,9 +85,4 @@ lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 		console.log('\nNobody won the game.');
 		process.exit(0);
 	}
-
-	console.log(lib.presentMatrix(matrix));
-	console.log("Select one move from below:\n");
-	if(availableMoves.length>0)
-		console.log(lib.showUserOption(availableMoves));
 }

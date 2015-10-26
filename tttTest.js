@@ -1,10 +1,11 @@
 var m=require("./tttLib.js").lib;
+var k =  require("./keypress.js").k;
 var assert=require("assert");
 var test={};
 exports.test=test;
 
 test["getMatrix gives an 2D array with effect of user move"]=function(){
-	var matrix=  [ ['','',''],
+	var matrix=  [ 	['','',''],
 					['','',''],
 					['','','']];
 	var move=11;
@@ -69,7 +70,3 @@ test["checkForMatch checks whether a player had a match in row or column or diag
 	assert.deepEqual(expected,m.checkForMatch(playerO));
 };
 //---------------------------------------------------------------------------------------
-// var availableMove=[11,12,13,1]
-// test["isValidMove checks whether the given move is valid or not when valid move is given"]=function(){
-// 	assert.equal(true,m.isValidMove('11'));
-// };
