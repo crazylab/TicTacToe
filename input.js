@@ -40,7 +40,7 @@ key.processInput = function(matrix,players,availableMoves){
 	var status = {winner : false, end: false};
 	charm.erase('up');
 	
-	grphx.presentScreen('O',position);
+	grphx.drawDiagram('O',position);
 	grphx.cursor(position);
 	keypress(process.stdin);
 
@@ -64,10 +64,10 @@ key.processInput = function(matrix,players,availableMoves){
 							break;
 			case 'space': 	var move = +(row + '' + column);
 							status = lib.handleUserInteraction(matrix,players[playerIndex],move,availableMoves);
-							playerIndex = 1 - playerIndex;
+							playerIndex = status.isValidMove ? 1 - playerIndex : playerIndex;
 		}	
 
-		grphx.presentScreen(players[playerIndex].symbol);
+		grphx.drawDiagram(players[playerIndex].symbol);
 		grphx.cursor(position);
 		grphx.writeSymbols(matrix);
 

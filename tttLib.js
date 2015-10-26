@@ -57,7 +57,7 @@ lib.endGame = function(){
 }
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	if(availableMoves.indexOf(move) == -1)
-		return {winner : false, end: false};
+		return {winner : false, end: false, isValidMove: false};
 	var indexOfMove = availableMoves.indexOf(+move);
 	var placeSelected=availableMoves.splice(indexOfMove,1)[0];
 
@@ -65,7 +65,8 @@ lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	player.moves.push(placeSelected);
 
 	return {
-		winner : 	lib.checkForMatch(player),
-		end    : 	availableMoves.length == []
+		winner 		: 	lib.checkForMatch(player),
+		end    		: 	availableMoves.length == [],
+		isValidMove : 	true
 	}
 }

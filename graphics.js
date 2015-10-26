@@ -13,7 +13,7 @@ var grphx = {
 };
 exports.grphx = grphx;
 
-var writeHeading = function(message){
+grphx.writeHeading = function(message){
 	axel.bg(255,0,0);
 	axel.fg(255,255,255);
 	axel.text(69,2,message);
@@ -41,13 +41,14 @@ grphx.cursor = function(position){
 	var position = {x: position.x - 4, y: position.y + 2};
 	drawCursor(position.x,position.y);
 }
+//-----------------------------------------------------------------------------------
 grphx.writeMessage = function(message,position){
 	var messageLength = message.length;
 	axel.bg(255,0,0);
 	axel.text(position.x - (messageLength/2),position.y,message);
 	axel.bg(0,0,0)
 }
-
+//-----------------------------------------------------------------------------------
 var horizontalLines = function(center){
 	axel.bg(255,255,255);
 	//Top Line
@@ -74,15 +75,11 @@ var verticalLines = function(center){
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 }
-var drawDiagram = function(center){
-	horizontalLines(center);
-	verticalLines(center);
-}
-grphx.presentScreen = function(player){
+grphx.drawDiagram = function(player){
 	charm.cursor(false);
-	writeHeading("Player "+player+"'s  Turn");
-	drawDiagram(this.center);
-
-	axel.bg(0,0,0);	
+	
+	grphx.writeHeading("Player "+player+"'s  Turn");
+	horizontalLines(this.center);
+	verticalLines(this.center);
 }
 
