@@ -9,6 +9,6 @@ var main=function(){
 				 	[' ',' ',' '],
 				 	[' ',' ',' ']
 			   	 ];
-	key.input(matrix,players,availableMoves);
+	key.processInput(matrix,players,availableMoves);
 }
 main();

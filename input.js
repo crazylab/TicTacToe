@@ -27,7 +27,7 @@ var down = function(center,position){
 	position.y = position.y < limit ? position.y += 8 : position.y;
 	charm.position(position.x, position.y);	
 }
-key.input = function(matrix,players,availableMoves){
+key.processInput = function(matrix,players,availableMoves){
 	var screenHeight = process.stdout.rows;
 	var screenWidth = process.stdout.columns;
 
@@ -48,6 +48,7 @@ key.input = function(matrix,players,availableMoves){
 		charm.erase('up');
 		charm.erase('down');
 		charm.position(0,0);
+
 		switch(key.name){
 			case 'left' : 	left(center,position);
 							column = column == 1 ? column : column - 1;
@@ -68,23 +69,22 @@ key.input = function(matrix,players,availableMoves){
 
 		grphx.presentScreen(players[playerIndex].symbol);
 		grphx.cursor(position);
-		grphx.writeSymbols(matrix,center);
+		grphx.writeSymbols(matrix);
 
-		if(status.end){
-			grphx.writeMessage('Nobody Won The Game ..',center);
-			setTimeout(function(){
-				charm.reset();
-		    	process.stdin.pause();
-			},1500);
-		}
 		if(status.winner){
 			grphx.writeMessage('Player '+status.winner+' Won The Game ..',center);
+		    process.stdin.pause();
 			setTimeout(function(){
 				charm.reset();
-		    	process.stdin.pause();
 			},1500);
 		}
-	  
+	  	if(status.end){
+			grphx.writeMessage('Nobody Won The Game ..',center);
+		    process.stdin.pause();
+			setTimeout(function(){
+				charm.reset();
+			},1500);
+		}
 	  	if (key.name == 'escape' || key.name == 'q') {
 			charm.reset();
 	    	process.stdin.pause();

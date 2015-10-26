@@ -1,4 +1,5 @@
 grphx = require('./graphics.js').grphx;
+
 var lib={};
 exports.lib=lib;
 
@@ -47,12 +48,16 @@ lib.checkForMatch=function(player){
 	var column=lib.checkColumnMatch(player);
 	return diagonal||row||column;
 }
-var simplyfyMove=function(move){
-	return move.replace(/\D/g,'');
-};
+lib.endGame = function(){
+	grphx.writeMessage('Nobody Won The Game ..',center);
+	setTimeout(function(){
+		charm.reset();
+		process.stdin.pause();
+	},1500);
+}
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	if(availableMoves.indexOf(move) == -1)
-		return;
+		return {winner : false, end: false};
 	var indexOfMove = availableMoves.indexOf(+move);
 	var placeSelected=availableMoves.splice(indexOfMove,1)[0];
 
@@ -61,6 +66,6 @@ lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 
 	return {
 		winner : 	lib.checkForMatch(player),
-		end    : 	availableMoves.length==[]
+		end    : 	availableMoves.length == []
 	}
 }
