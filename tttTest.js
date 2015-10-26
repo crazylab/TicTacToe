@@ -1,5 +1,4 @@
 var m=require("./tttLib.js").lib;
-var k =  require("./keypress.js").k;
 var assert=require("assert");
 var test={};
 exports.test=test;

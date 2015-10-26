@@ -1,24 +1,22 @@
 var axel = require('axel');
 var charm = require('charm')(process.stdout);
 
-var grphx = {	
-	screen : { 
-		height: process.stdout.rows, 
-		width: process.stdout.columns
-	},
+var screen = {	
+	height: process.stdout.rows, 
+	width: process.stdout.columns,
 	center : { 
 		height: Math.round(process.stdout.rows/2), 
 		width: Math.round(process.stdout.columns/2)
 	}
 };
-exports.grphx = grphx;
+exports.screen = screen;
 
-grphx.writeHeading = function(message){
+screen.writeHeading = function(message){
 	axel.bg(255,0,0);
 	axel.fg(255,255,255);
 	axel.text(69,2,message);
 }
-grphx.writeSymbols = function(matrix){
+screen.writeSymbols = function(matrix){
 	//Top Row
 	axel.text(this.center.width - 20, this.center.height - 8, matrix[0][0]);
 	axel.text(this.center.width, this.center.height - 8, matrix[0][1]);
@@ -32,17 +30,17 @@ grphx.writeSymbols = function(matrix){
 	axel.text(this.center.width, this.center.height + 8, matrix[2][1]);
 	axel.text(this.center.width + 20, this.center.height + 8, matrix[2][2]);
 }
-var drawCursor = function(x,y){
+screen.drawCursor = function(position){
 	axel.bg(100,100,100);
-	axel.box(x,y,8,1);
+	axel.box(position.width - 4,position.height + 2,8,1);
 	axel.bg(0,0,0);
 }
-grphx.cursor = function(position){
-	var position = {x: position.x - 4, y: position.y + 2};
-	drawCursor(position.x,position.y);
-}
+// screen.cursor = function(position){
+// 	var position = {x: position.x - 4, y: position.y + 2};
+// 	drawCursor(position.,position.y);
+// }
 //-----------------------------------------------------------------------------------
-grphx.writeMessage = function(message){
+screen.writeMessage = function(message){
 	var messageLength = message.length;
 	axel.bg(255,0,0);
 	axel.text(this.center.width - (messageLength/2),this.center.height,message);
@@ -75,10 +73,10 @@ var verticalLines = function(center){
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 }
-grphx.drawDiagram = function(player){
+screen.drawDiagram = function(player){
 	charm.cursor(false);
 	
-	grphx.writeHeading("Player "+player+"'s  Turn");
+	screen.writeHeading("Player "+player+"'s  Turn");
 	horizontalLines(this.center);
 	verticalLines(this.center);
 }

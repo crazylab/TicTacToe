@@ -1,56 +1,46 @@
 var charm = require('charm')(process.stdout);
-var grphx = require('./graphics.js').grphx;
+var screen = require('./graphics.js').screen;
 
 var lib={};
 exports.lib=lib;
 
-lib.getMatrix=function(matrix,move,playerSymbol){
-	move=String(move).split("").map(function(num){
-		return num-1;
+lib.getMatrix = function(matrix,move,playerSymbol){
+	move = String(move).split("").map(function(num){
+		return num - 1;
 	});
-	matrix[move[0]][move[1]]=playerSymbol;
+	matrix[move[0]][move[1]] = playerSymbol;
 	return matrix;
 }
-lib.checkDiagonalMatch=function(player){
-	var multipleOf11=function(element){
-		return element%11==0;
-	};
-	var result1=player.moves.filter(multipleOf11).length==3?player.symbol:false;
-	var result2=player.moves.filter(function(element){
-		return element==13||element==22||element==31;
+var matchEverything = function(findMe,insideMe){
+	return findMe.every(function(element){
+		return insideMe.indexOf(element) != -1;
 	});
-	var status=result1||result2.length==3;
-	return status?player.symbol:false;
 }
-lib.checkColumnMatch=function(player){
-	var moveLength=player.moves.length;
-	for(var index=0;index<moveLength;index++){
-		var match=player.moves.filter(function(element){
-			var remainder=(player.moves[index]-element)%10;
-			return remainder==0;
-		});
-	}
-	return match.length==3?player.symbol:false;
+lib.checkDiagonalMatch = function(player){
+	var diagonal1 = matchEverything([11,22,33],player.moves);
+	var diagonal2 = matchEverything([13,22,31],player.moves);
+	return diagonal1 || diagonal2 ? player.symbol : false;
 }
-lib.checkRowMatch=function(player){
-	player.moves=player.moves.sort();
-	for(var index=0;index<5;index++){
-		var match=player.moves.filter(function(element,index,arr){
-			return (arr[index+1]==element+1)||(arr[index-1]==element-1);
-		});
-		if(match.length==3)
-			return player.symbol;
-	}
-	return false;
+lib.checkColumnMatch = function(player){
+	var column1 = matchEverything([11,21,31],player.moves);
+	var column2 = matchEverything([12,22,32],player.moves);
+	var column3 = matchEverything([13,23,33],player.moves);
+	return column1 || column2 || column3 ? player.symbol : false;
 }
-lib.checkForMatch=function(player){
-	var diagonal=lib.checkDiagonalMatch(player);
-	var row=lib.checkRowMatch(player);
-	var column=lib.checkColumnMatch(player);
-	return diagonal||row||column;
+lib.checkRowMatch = function(player){
+	var row1 = matchEverything([11,12,13],player.moves);
+	var row2 = matchEverything([21,22,23],player.moves);
+	var row3 = matchEverything([31,32,33],player.moves);
+	return row1 || row2 || row3 ? player.symbol : false;
+}
+lib.checkForMatch = function(player){
+	var diagonal = lib.checkDiagonalMatch(player);
+	var row = lib.checkRowMatch(player);
+	var column = lib.checkColumnMatch(player);
+	return diagonal || row || column;
 }
 lib.gameDraw = function(){
-	grphx.writeMessage('Nobody Won The Game ..');
+	screen.writeMessage('Nobody Won The Game ..');
 	process.stdin.pause();
 	setTimeout(function(){
 		charm.reset();
@@ -59,7 +49,7 @@ lib.gameDraw = function(){
 
 }
 lib.gameWin = function(winner){
-	grphx.writeMessage('Player '+winner+' Won The Game ..');
+	screen.writeMessage('Player '+winner+' Won The Game ..');
 	process.stdin.pause();
 	setTimeout(function(){
 		charm.reset();

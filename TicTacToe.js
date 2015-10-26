@@ -1,4 +1,4 @@
-var key = require("./input.js").key;
+var io = require("./io.js").io;
 
 var main=function(){
 	var availableMoves = [11,12,13,21,22,23,31,32,33];
@@ -9,6 +9,6 @@ var main=function(){
 				 	[' ',' ',' '],
 				 	[' ',' ',' ']
 			   	 ];
-	key.processInput(matrix,players,availableMoves);
+	io.processInput(matrix,players,availableMoves);
 }
 main();
