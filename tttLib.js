@@ -1,4 +1,5 @@
-grphx = require('./graphics.js').grphx;
+var charm = require('charm')(process.stdout);
+var grphx = require('./graphics.js').grphx;
 
 var lib={};
 exports.lib=lib;
@@ -48,12 +49,22 @@ lib.checkForMatch=function(player){
 	var column=lib.checkColumnMatch(player);
 	return diagonal||row||column;
 }
-lib.endGame = function(){
-	grphx.writeMessage('Nobody Won The Game ..',center);
+lib.gameDraw = function(){
+	grphx.writeMessage('Nobody Won The Game ..');
+	process.stdin.pause();
 	setTimeout(function(){
 		charm.reset();
-		process.stdin.pause();
-	},1500);
+		process.exit(0);
+	},2000);
+
+}
+lib.gameWin = function(winner){
+	grphx.writeMessage('Player '+winner+' Won The Game ..');
+	process.stdin.pause();
+	setTimeout(function(){
+		charm.reset();
+		process.exit(0);
+	},2000);
 }
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	if(availableMoves.indexOf(move) == -1)

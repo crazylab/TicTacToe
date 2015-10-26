@@ -72,18 +72,10 @@ key.processInput = function(matrix,players,availableMoves){
 		grphx.writeSymbols(matrix);
 
 		if(status.winner){
-			grphx.writeMessage('Player '+status.winner+' Won The Game ..',center);
-		    process.stdin.pause();
-			setTimeout(function(){
-				charm.reset();
-			},1500);
+			lib.gameWin(status.winner);
 		}
-	  	if(status.end){
-			grphx.writeMessage('Nobody Won The Game ..',center);
-		    process.stdin.pause();
-			setTimeout(function(){
-				charm.reset();
-			},1500);
+	  	if(status.end && !status.winner){
+			lib.gameDraw();
 		}
 	  	if (key.name == 'escape' || key.name == 'q') {
 			charm.reset();

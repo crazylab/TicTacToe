@@ -42,10 +42,10 @@ grphx.cursor = function(position){
 	drawCursor(position.x,position.y);
 }
 //-----------------------------------------------------------------------------------
-grphx.writeMessage = function(message,position){
+grphx.writeMessage = function(message){
 	var messageLength = message.length;
 	axel.bg(255,0,0);
-	axel.text(position.x - (messageLength/2),position.y,message);
+	axel.text(this.center.width - (messageLength/2),this.center.height,message);
 	axel.bg(0,0,0)
 }
 //-----------------------------------------------------------------------------------
