@@ -34,14 +34,17 @@ screen.drawCursor = function(position){
 screen.writeMessage = function(message){
 	var messageLength = message.length;
 	axel.bg(255,0,0);
+	axel.box(this.center.width - (messageLength/2) - 4, this.center.height - 1,messageLength + 8,1);
 	axel.text(this.center.width - (messageLength/2),this.center.height - 1,message);
 	axel.bg(0,0,0)
 }
 //---------------------------------------------------------------------------------------
 screen.writeHeading = function(message){
-	axel.bg(255,0,0);
+	var messageLength = message.length;
+	axel.bg(25,25,30);
+	axel.box(this.center.width - (messageLength/2) - 5, 3,messageLength + 10,1);
 	axel.fg(255,255,255);
-	axel.text(69,2,message);
+	axel.text(this.center.width - (messageLength/2),3,message);
 }
 //---------------------------------------------------------------------------------------
 var writeInfo = function(){
@@ -59,26 +62,26 @@ var writeInfo = function(){
 var horizontalLines = function(center){
 	axel.bg(255,255,255);
 	//Top Line
-	var start = {width: center.width - 30, height: center.height - 5};
-	var end	  = {width: center.width + 30, height: center.height - 5};
+	var start = {width: center.width - 28, height: center.height - 4};
+	var end	  = {width: center.width + 28, height: center.height - 4};
 	axel.line(start.width,start.height,end.width,end.height);
 
 	//Bottom Line
-	var start = {width: center.width - 30, height: center.height + 4};
-	var end	  = {width: center.width + 30, height: center.height + 4};
+	var start = {width: center.width - 28, height: center.height + 4};
+	var end	  = {width: center.width + 28, height: center.height + 4};
 	axel.line(start.width,start.height,end.width,end.height);
 }
 var verticalLines = function(center){
 	axel.bg(255,255,255);
 	//Left Line
-	var start = {width: center.width - 12, height: center.height - 12};
-	var end	  = {width: center.width - 12, height: center.height + 12};
+	var start = {width: center.width - 12, height: center.height - 10};
+	var end	  = {width: center.width - 12, height: center.height + 11};
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 
 	//Right Line
-	var start = {width: center.width + 10, height: center.height - 12};
-	var end	  = {width: center.width + 10, height: center.height + 12};
+	var start = {width: center.width + 10, height: center.height - 10};
+	var end	  = {width: center.width + 10, height: center.height + 11};
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 }
