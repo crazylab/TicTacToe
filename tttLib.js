@@ -3,7 +3,7 @@ var screen = require('./graphics.js').screen;
 
 var lib={};
 exports.lib=lib;
-
+//-----------------------------------------------------------------------------
 lib.getMatrix = function(matrix,move,playerSymbol){
 	move = String(move).split("").map(function(num){
 		return num - 1;
@@ -59,7 +59,7 @@ lib.actionWhenGameWin = function(winner){
 }
 lib.checkGameEnd = function(status){
 	lib.actionWhenGameWin(status.winner);
-	lib.actionWhenGameDraw(status.end || status.winner);
+	lib.actionWhenGameDraw(status.end);
 }
 //-----------------------------------------------------------------------------
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){

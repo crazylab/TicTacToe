@@ -71,10 +71,10 @@ var verticalLines = function(center){
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 }
-screen.drawDiagram = function(player){
+screen.drawDiagram = function(player,end){
 	charm.cursor(false);
-	
-	screen.writeHeading("Player "+player+"'s  Turn");
+	if(!end)
+		screen.writeHeading("Player "+player+"'s  Turn");
 	horizontalLines(this.center);
 	verticalLines(this.center);
 }

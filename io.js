@@ -35,7 +35,7 @@ io.processInput = function(matrix,players,availableMoves){
 	var status = {winner : false, end: false};
 	charm.erase('up');
 	
-	screen.drawDiagram('O',position);
+	screen.drawDiagram('O',status.end);
 	screen.drawCursor(position);
 	keypress(process.stdin);
 
@@ -62,7 +62,7 @@ io.processInput = function(matrix,players,availableMoves){
 							playerIndex = status.isValidMove && !status.end? 1 - playerIndex : playerIndex;
 		}	
 
-		screen.drawDiagram(players[playerIndex].symbol);
+		screen.drawDiagram(players[playerIndex].symbol,status.end);
 		screen.drawCursor(position);
 		screen.writeSymbols(matrix);
 
