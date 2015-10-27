@@ -66,12 +66,7 @@ io.processInput = function(matrix,players,availableMoves){
 		screen.drawCursor(position);
 		screen.writeSymbols(matrix);
 
-		if(status.winner){
-			lib.gameWin(status.winner);
-		}
-	  	if(status.end && !status.winner){
-			lib.gameDraw();
-		}
+		lib.checkGameEnd(status);
 	  	if (key.name == 'escape' || key.name == 'q') {
 			charm.reset();
 	    	process.stdin.pause();

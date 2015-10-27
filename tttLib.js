@@ -11,6 +11,7 @@ lib.getMatrix = function(matrix,move,playerSymbol){
 	matrix[move[0]][move[1]] = playerSymbol;
 	return matrix;
 }
+//-----------------------------------------------------------------------------
 var matchEverything = function(findMe,insideMe){
 	return findMe.every(function(element){
 		return insideMe.indexOf(element) != -1;
@@ -39,23 +40,28 @@ lib.checkForMatch = function(player){
 	var column = lib.checkColumnMatch(player);
 	return diagonal || row || column;
 }
-lib.gameDraw = function(){
+//-----------------------------------------------------------------------------
+lib.actionWhenGameDraw = function(gameEnd){
+	if(!gameEnd)
+		return;
 	screen.writeMessage('Nobody Won The Game ..');
 	process.stdin.pause();
-	setTimeout(function(){
-		charm.reset();
-		process.exit(0);
-	},2000);
-
+	charm.position(0,screen.height);
+	process.exit(0);
 }
-lib.gameWin = function(winner){
+lib.actionWhenGameWin = function(winner){
+	if(!winner)
+		return;
 	screen.writeMessage('Player '+winner+' Won The Game ..');
 	process.stdin.pause();
-	setTimeout(function(){
-		charm.reset();
-		process.exit(0);
-	},2000);
+	charm.position(0,screen.height);
+	process.exit(0);
 }
+lib.checkGameEnd = function(status){
+	lib.actionWhenGameWin(status.winner);
+	lib.actionWhenGameDraw(status.end || status.winner);
+}
+//-----------------------------------------------------------------------------
 lib.handleUserInteraction=function(matrix,player,move,availableMoves){
 	if(availableMoves.indexOf(move) == -1)
 		return {winner : false, end: false, isValidMove: false};

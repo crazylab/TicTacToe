@@ -10,12 +10,13 @@ var screen = {
 	}
 };
 exports.screen = screen;
-
+//---------------------------------------------------------------------------------------
 screen.writeHeading = function(message){
 	axel.bg(255,0,0);
 	axel.fg(255,255,255);
 	axel.text(69,2,message);
 }
+//---------------------------------------------------------------------------------------
 screen.writeSymbols = function(matrix){
 	//Top Row
 	axel.text(this.center.width - 20, this.center.height - 8, matrix[0][0]);
@@ -23,27 +24,24 @@ screen.writeSymbols = function(matrix){
 	axel.text(this.center.width + 20, this.center.height - 8, matrix[0][2]);
 	//Middle Row
 	axel.text(this.center.width - 20, this.center.height, matrix[1][0]);
-	axel.text(this.center.width,this.center.height,matrix[1][1]);
+	axel.text(this.center.width, this.center.height, matrix[1][1]);
 	axel.text(this.center.width + 20, this.center.height, matrix[1][2]);
 	//Bottom Row
 	axel.text(this.center.width - 20, this.center.height + 8, matrix[2][0]);
 	axel.text(this.center.width, this.center.height + 8, matrix[2][1]);
 	axel.text(this.center.width + 20, this.center.height + 8, matrix[2][2]);
 }
+//---------------------------------------------------------------------------------------
 screen.drawCursor = function(position){
 	axel.bg(100,100,100);
 	axel.box(position.width - 4,position.height + 2,8,1);
 	axel.bg(0,0,0);
 }
-// screen.cursor = function(position){
-// 	var position = {x: position.x - 4, y: position.y + 2};
-// 	drawCursor(position.,position.y);
-// }
 //-----------------------------------------------------------------------------------
 screen.writeMessage = function(message){
 	var messageLength = message.length;
 	axel.bg(255,0,0);
-	axel.text(this.center.width - (messageLength/2),this.center.height,message);
+	axel.text(this.center.width - (messageLength/2),this.center.height - 1,message);
 	axel.bg(0,0,0)
 }
 //-----------------------------------------------------------------------------------
