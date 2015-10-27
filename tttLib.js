@@ -31,8 +31,10 @@ ttt = {
 		var move = String(this.currentMove).match(/./gi);
 		this.matrix[move[0] - 1][move[1] - 1] = player.symbol;
 		var winner = this.checkForMatch(player);
-		if(winner)
+		if(winner){
 			this.winner = winner;
+			this.end = true;
+		}
 	}
 }
 //-----------------------------------------------------------------------------

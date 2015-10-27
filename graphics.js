@@ -54,7 +54,7 @@ var writeInfo = function(){
 	axel.text(screen.width - 28,8,'→ 		Right');
 	axel.text(screen.width - 28,10,'↑ 		Up');
 	axel.text(screen.width - 28,12,'↓		Down');
-	axel.text(screen.width - 28,14,'space	Select');
+	axel.text(screen.width - 28,14,'space		Select');
 	axel.text(screen.width - 28,16,'esc / q	Exit');
 	axel.bg(0,0,0);
 }

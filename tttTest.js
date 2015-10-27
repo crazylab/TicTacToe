@@ -25,7 +25,6 @@ test["setMove sets isValidMove upon giving a valid move"] = function(){
 test["setMove sets end when no more moves available"] = function(){
 	m.availableMoves = [11,12,13,21,22,23,31,32,33];
 	var availableMoves = [11,12,13,22,23,31,32,33];
-	m.setMove = 21;
 	availableMoves.forEach(function(move){
 		m.setMove = move;
 		assert.equal(true,m.isValidMove);

@@ -59,9 +59,8 @@ io.processInput = function(players){
 							break;
 			case 'space': 	var move = +(row + '' + column);
 							status = lib.handleUserMove(players[playerIndex],move);
-							playerIndex = status.isValidMove && !status.end? 1 - playerIndex : playerIndex;
+							playerIndex = status.isValidMove? 1 - playerIndex : playerIndex;
 		}	
-
 		screen.drawDiagram(players[playerIndex].symbol,status.end);
 		screen.drawCursor(position);
 		screen.writeSymbols(lib.matrix);
