@@ -2,7 +2,7 @@ var keypress = require('keypress');
 var charm = require('charm')(process.stdout);
 
 var screen = require("./graphics.js").screen;
-var lib = require("./tttLib.js").lib;
+var lib = require("./tttLib.js").ttt;
 
 var io = {};
 exports.io = io;
@@ -27,7 +27,7 @@ var down = function(position){
 	position.height = position.height < limit ? position.height += 8 : position.height;
 	charm.position(position.width, position.height);	
 }
-io.processInput = function(matrix,players,availableMoves){
+io.processInput = function(players){
 	var position = JSON.parse(JSON.stringify(screen.center));
 	var row = 2, column = 2;
 	var move = +(row + '' + column);
@@ -35,7 +35,7 @@ io.processInput = function(matrix,players,availableMoves){
 	var status = {winner : false, end: false};
 	charm.erase('up');
 	
-	screen.drawDiagram('O',status.end);
+	screen.drawDiagram('O',false);
 	screen.drawCursor(position);
 	keypress(process.stdin);
 
@@ -58,17 +58,19 @@ io.processInput = function(matrix,players,availableMoves){
 							row = row == 3 ? row : row + 1;
 							break;
 			case 'space': 	var move = +(row + '' + column);
-							status = lib.handleUserInteraction(matrix,players[playerIndex],move,availableMoves);
+							status = lib.handleUserMove(players[playerIndex],move);
+							console.log()
 							playerIndex = status.isValidMove && !status.end? 1 - playerIndex : playerIndex;
 		}	
 
 		screen.drawDiagram(players[playerIndex].symbol,status.end);
 		screen.drawCursor(position);
-		screen.writeSymbols(matrix);
+		screen.writeSymbols(lib.matrix);
 
 		lib.checkGameEnd(status);
 	  	if (key.name == 'escape' || key.name == 'q') {
-			charm.reset();
+			charm.position(0,screen.height);
+			charm.cursor(true);
 	    	process.stdin.pause();
 	  	}
 	});

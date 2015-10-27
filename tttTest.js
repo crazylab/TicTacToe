@@ -1,8 +1,53 @@
-var m=require("./tttLib.js").lib;
+var m=require("./tttLib.js").ttt;
 var assert=require("assert");
 var test={};
 exports.test=test;
 
+test["setMove sets remove moves from availableMoves upon giving a valid Move"]=function(){
+	var availableMoves = [11,12,13,22,23,31,32,33];
+	m.setMove = 21;
+	assert.deepEqual(availableMoves,m.availableMoves);
+	m.setMove = 21;
+	assert.deepEqual(availableMoves,m.availableMoves); //21 is already taken
+	assert.equal(false,m.isValidMove);
+	assert.equal(21,m.currentMove);
+};
+test["setMove sets isValidMove upon giving a valid move"] = function(){
+	m.availableMoves = [11,12,13,21,22,23,31,32,33];
+	var availableMoves = [11,12,13,21,22,23,31,32,33];
+	availableMoves.forEach(function(move){
+		m.setMove = move;
+		assert.equal(true,m.isValidMove);
+	});
+	m.setMove = 22;
+	assert.equal(false,m.isValidMove);
+}
+test["setMove sets end when no more moves available"] = function(){
+	m.availableMoves = [11,12,13,21,22,23,31,32,33];
+	var availableMoves = [11,12,13,22,23,31,32,33];
+	m.setMove = 21;
+	availableMoves.forEach(function(move){
+		m.setMove = move;
+		assert.equal(true,m.isValidMove);
+	});
+	assert.equal(true, m.end);
+}
+test["setMove sets end when someone won the game"] = function(){
+	m.winner = 'O';
+	m.availableMoves = [11,12,13,21,22,23,31,32,33];
+	m.setMove = 21;
+	assert.equal(true, m.end);
+}
+test["setMatrix sets symbol in matrix"] = function(){
+	m.currentMove = 33;
+	m.setMatrix = {symbol: 'X', moves:[]};
+	assert.equal('X',m.matrix[2][2]);
+}
+test["setMatrix sets winner symbol in case of win condition"] = function(){
+	m.currentMove = 33;
+	m.setMatrix = {symbol: 'X', moves:[33,22,11]};
+	assert.equal('X',m.winner);
+}
 test["getMatrix gives an 2D array with effect of user move"]=function(){
 	var matrix=  [ 	['','',''],
 					['','',''],
@@ -62,10 +107,10 @@ test["checkForMatch checks whether a player had a match in row or column or diag
 	var expected='O';
 	assert.deepEqual(expected,m.checkForMatch(playerO));
 };
-test["checkForMatch checks whether a player had a match in row or column or diagonal and gives false when there is no match"]=function(){
+test["checkForMatch checks whether a player had a match in row or column or diagonal and gives null when there is no match"]=function(){
 	var playerO={symbol:'O',
 				 moves:[21,33,22,12,31]};
-	var expected=false;
+	var expected = null;
 	assert.deepEqual(expected,m.checkForMatch(playerO));
 };
 //---------------------------------------------------------------------------------------
