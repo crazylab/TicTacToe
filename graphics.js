@@ -1,6 +1,5 @@
 var axel = require('axel');
 var charm = require('charm')(process.stdout);
-
 var screen = {	
 	height: process.stdout.rows, 
 	width: process.stdout.columns,
@@ -10,12 +9,6 @@ var screen = {
 	}
 };
 exports.screen = screen;
-//---------------------------------------------------------------------------------------
-screen.writeHeading = function(message){
-	axel.bg(255,0,0);
-	axel.fg(255,255,255);
-	axel.text(69,2,message);
-}
 //---------------------------------------------------------------------------------------
 screen.writeSymbols = function(matrix){
 	//Top Row
@@ -44,6 +37,24 @@ screen.writeMessage = function(message){
 	axel.text(this.center.width - (messageLength/2),this.center.height - 1,message);
 	axel.bg(0,0,0)
 }
+//---------------------------------------------------------------------------------------
+screen.writeHeading = function(message){
+	axel.bg(255,0,0);
+	axel.fg(255,255,255);
+	axel.text(69,2,message);
+}
+//---------------------------------------------------------------------------------------
+var writeInfo = function(){
+	axel.bg(25,25,30);
+	axel.box(screen.width - 30, 5,25,13);
+	axel.text(screen.width - 28,6,'← 		Left');
+	axel.text(screen.width - 28,8,'→ 		Right');
+	axel.text(screen.width - 28,10,'↑ 		Up');
+	axel.text(screen.width - 28,12,'↓		Down');
+	axel.text(screen.width - 28,14,'space	Select');
+	axel.text(screen.width - 28,16,'esc / q	Exit');
+	axel.bg(0,0,0);
+}
 //-----------------------------------------------------------------------------------
 var horizontalLines = function(center){
 	axel.bg(255,255,255);
@@ -66,8 +77,8 @@ var verticalLines = function(center){
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 
 	//Right Line
-	var start = {width: center.width + 12, height: center.height - 12};
-	var end	  = {width: center.width + 12, height: center.height + 12};
+	var start = {width: center.width + 10, height: center.height - 12};
+	var end	  = {width: center.width + 10, height: center.height + 12};
 	axel.line(start.width,start.height,end.width,end.height);
 	axel.line(start.width+1,start.height,end.width+1,end.height);
 }
@@ -77,5 +88,6 @@ screen.drawDiagram = function(player,end){
 		screen.writeHeading("Player "+player+"'s  Turn");
 	horizontalLines(this.center);
 	verticalLines(this.center);
+	writeInfo();
 }
 

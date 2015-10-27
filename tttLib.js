@@ -83,9 +83,9 @@ ttt.actionWhenGameWin = function(winner){
 	charm.cursor(true);
 	process.exit(0);
 }
-ttt.checkGameEnd = function(status){
-	ttt.actionWhenGameWin(status.winner);
-	ttt.actionWhenGameDraw(status.end);
+ttt.checkGameEnd = function(){
+	ttt.actionWhenGameWin(this.winner);
+	ttt.actionWhenGameDraw(this.end);
 }
 //-----------------------------------------------------------------------------
 ttt.handleUserMove = function(player,move){

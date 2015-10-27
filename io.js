@@ -7,22 +7,22 @@ var lib = require("./tttLib.js").ttt;
 var io = {};
 exports.io = io;
 
-var left = function(position){
+io.left = function(position){
 	var limit = screen.center.width - 20;
 	position.width = position.width > limit ? position.width -= 20 : position.width;
 	charm.position(position.width, position.height);
 }
-var right = function(position){
+io.right = function(position){
 	var limit = screen.center.width + 20;
 	position.width = position.width < limit ? position.width += 20 : position.width;
 	charm.position(position.width, position.height);	
 }
-var up = function(position){
+io.up = function(position){
 	var limit = screen.center.height - 8;
 	position.height = position.height > limit ? position.height -= 8 : position.height;
 	charm.position(position.width, position.height);	
 }
-var down = function(position){
+io.down = function(position){
 	var limit = screen.center.height + 8;
 	position.height = position.height < limit ? position.height += 8 : position.height;
 	charm.position(position.width, position.height);	
@@ -45,21 +45,20 @@ io.processInput = function(players){
 		charm.position(0,0);
 
 		switch(key.name){
-			case 'left' : 	left(position);
+			case 'left' : 	io.left(position);
 							column = column == 1 ? column : column - 1;
 							break;
-			case 'right': 	right(position);
+			case 'right': 	io.right(position);
 							column = column == 3 ? column : column + 1;
 							break;
-			case 'up' 	: 	up(position);
+			case 'up' 	: 	io.up(position);
 							row =  row == 1 ? row : row - 1;
 							break;
-			case 'down' : 	down(position);
+			case 'down' : 	io.down(position);
 							row = row == 3 ? row : row + 1;
 							break;
 			case 'space': 	var move = +(row + '' + column);
 							status = lib.handleUserMove(players[playerIndex],move);
-							console.log()
 							playerIndex = status.isValidMove && !status.end? 1 - playerIndex : playerIndex;
 		}	
 
@@ -67,7 +66,7 @@ io.processInput = function(players){
 		screen.drawCursor(position);
 		screen.writeSymbols(lib.matrix);
 
-		lib.checkGameEnd(status);
+		lib.checkGameEnd();
 	  	if (key.name == 'escape' || key.name == 'q') {
 			charm.position(0,screen.height);
 			charm.cursor(true);
