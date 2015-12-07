@@ -32,6 +32,7 @@ test["setMove sets end when no more moves available"] = function(){
 	assert.equal(true, m.end);
 }
 test["setMove sets end when someone won the game"] = function(){
+	m.end = false;
 	m.winner = 'O';
 	m.availableMoves = [11,12,13,21,22,23,31,32,33];
 	m.setMove = 21;
